@@ -1,5 +1,5 @@
 {
-	"lucicfg": "1.46.6",
+	"lucicfg": "1.46.7",
 	"packages": [
 		{
 			"name": "@angle-project",
@@ -25,7 +25,7 @@
 			"name": "@chromium-targets",
 			"source": {
 				"repo": "https://chromium.googlesource.com/chromium/src/+/refs/heads/main",
-				"revision": "70ef3eb30299d6e923a95e529b4653502b716953",
+				"revision": "ecddf8bda0585cbbf5b8462552a3fbc8c185cff0",
 				"path": "infra/config/targets"
 			},
 			"deps": [
