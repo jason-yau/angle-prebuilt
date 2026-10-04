@@ -55,13 +55,13 @@ vars = {
   'checkout_angle_partition_alloc': False,
 
   # Version of Chromium our Chromium-based DEPS are mirrored from.
-  'chromium_revision': 'c35fb307715ed5d545a35d0c3ee3cf782bf86960',
+  'chromium_revision': '738956cca47a264e92106fdbefdc040ee7ed487d',
   # We never want to checkout chromium,
   # but need a dummy DEPS entry for the autoroller
   'dummy_checkout_chromium': False,
 
   # Current revision of VK-GL-CTS (a.k.a dEQP).
-  'vk_gl_cts_revision': '93bca01861b0e3ef3c387027a9791e6d065f900c',
+  'vk_gl_cts_revision': '31807adf6dc7111b32b1ade990d0d8e552fa1b78',
 
   # Current revision of googletest.
   'googletest_revision': '4fe3307fb2d9f86d19777c7eb0e4809e9694dde7',
@@ -88,11 +88,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': '7cce2c2359d9951315aa25b99f9bda09942d90ad',
+  'catapult_revision': 'ccd0b9c6b2ab9b038842e7d22ca15c695b089147',
 
   # the commit queue can handle CLs rolling Fuchsia sdk
   # and whatever else without interference from each other.
-  'fuchsia_version': 'version:33.20260922.5.1',
+  'fuchsia_version': 'version:33.20260927.4.1',
 
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling luci-go
@@ -138,7 +138,7 @@ vars = {
   'reclient_version': 're_client_version:0.185.0.db415f21-gomaip',
 
   # siso CIPD package version.
-  'siso_version': 'git_revision:22353054fea20f637c8fa302a90daf9e2cc10497',
+  'siso_version': 'git_revision:c574896b272b40aac6e44c228ee0b471ea7e3d7d',
 
   # CPython 3 CIPD package version for Siso hermetic toolchain.
   'cpython3_version': 'version:3@3.11.9.chromium.38',
@@ -160,7 +160,7 @@ vars = {
 
    # Make Dawn skip its standalone dependencies
   'dawn_standalone': False,
-  'dawn_revision': 'c3d35d65fb2f087c425ba20050c5ff03d32f1114',
+  'dawn_revision': 'a83897a02e49609b802d622528bae370fe0e9778',
 
   # All of the restricted traces (large).
   'checkout_angle_restricted_traces': 'checkout_angle_internal',
@@ -225,6 +225,7 @@ vars = {
   'checkout_angle_restricted_trace_brotato': 'checkout_extra_traces',
   'checkout_angle_restricted_trace_bubble_shooter': 'checkout_extra_traces',
   'checkout_angle_restricted_trace_bubble_shooter_and_friends': 'checkout_extra_traces',
+  'checkout_angle_restricted_trace_bubble_shooter_pop_bubbles': 'checkout_angle_restricted_traces',
   'checkout_angle_restricted_trace_bubble_shooter_relaxing': 'checkout_extra_traces',
   'checkout_angle_restricted_trace_bullet_echo': 'checkout_extra_traces',
   'checkout_angle_restricted_trace_bus_simulator_indonesia': 'checkout_extra_traces',
@@ -268,6 +269,7 @@ vars = {
   'checkout_angle_restricted_trace_domino_dreams': 'checkout_extra_traces',
   'checkout_angle_restricted_trace_dont_starve': 'checkout_extra_traces',
   'checkout_angle_restricted_trace_dota_underlords': 'checkout_angle_restricted_traces',
+  'checkout_angle_restricted_trace_doubleu_casino': 'checkout_angle_restricted_traces',
   'checkout_angle_restricted_trace_downwell': 'checkout_extra_traces',
   'checkout_angle_restricted_trace_dr_driving': 'checkout_extra_traces',
   'checkout_angle_restricted_trace_dr_parking_4': 'checkout_extra_traces',
@@ -311,6 +313,7 @@ vars = {
   'checkout_angle_restricted_trace_gossip_harbor': 'checkout_extra_traces',
   'checkout_angle_restricted_trace_grand_mountain_adventure': 'checkout_angle_restricted_traces',
   'checkout_angle_restricted_trace_grimvalor': 'checkout_extra_traces',
+  'checkout_angle_restricted_trace_guns_of_glory_lost_island': 'checkout_angle_restricted_traces',
   'checkout_angle_restricted_trace_gwent_witcher_card_game': 'checkout_extra_traces',
   'checkout_angle_restricted_trace_happy_color': 'checkout_extra_traces',
   'checkout_angle_restricted_trace_harry_potter_hogwarts_mystery': 'checkout_extra_traces',
@@ -421,6 +424,7 @@ vars = {
   'checkout_angle_restricted_trace_piano_fire': 'checkout_extra_traces',
   'checkout_angle_restricted_trace_piano_kids': 'checkout_extra_traces',
   'checkout_angle_restricted_trace_plague_inc': 'checkout_extra_traces',
+  'checkout_angle_restricted_trace_plants_vs_zombies': 'checkout_angle_restricted_traces',
   'checkout_angle_restricted_trace_plants_vs_zombies_2': 'checkout_extra_traces',
   'checkout_angle_restricted_trace_plants_vs_zombies_heroes': 'checkout_extra_traces',
   'checkout_angle_restricted_trace_pokemon_go': 'checkout_extra_traces',
@@ -550,10 +554,12 @@ vars = {
   'checkout_angle_restricted_trace_world_war_doh': 'checkout_extra_traces',
   'checkout_angle_restricted_trace_worms_zone_io': 'checkout_extra_traces',
   'checkout_angle_restricted_trace_wuthering_waves': 'checkout_angle_restricted_traces',
+  'checkout_angle_restricted_trace_wwe_supercard': 'checkout_angle_restricted_traces',
   'checkout_angle_restricted_trace_yalla_ludo': 'checkout_extra_traces',
   'checkout_angle_restricted_trace_zenonia_4': 'checkout_extra_traces',
   'checkout_angle_restricted_trace_zillow': 'checkout_extra_traces',
   'checkout_angle_restricted_trace_zombie_smasher': 'checkout_extra_traces',
+  'checkout_angle_restricted_trace_zombie_waves': 'checkout_angle_restricted_traces',
   # === ANGLE Restricted Trace Generated Var End ===
 
   'checkout_angle_perfetto': 'checkout_angle_restricted_traces',
@@ -568,7 +574,7 @@ vars = {
 deps = {
 
   'build': {
-    'url': Var('chromium_git') + '/chromium/src/build.git@d10dc3f6ad69e7a7b91f62eac101dff88b8657bd',
+    'url': Var('chromium_git') + '/chromium/src/build.git@09e42e04457d387d5eda95a2d4f94c55fb1d6601',
     'condition': 'not build_with_chromium',
   },
 
@@ -578,7 +584,7 @@ deps = {
   },
 
   'third_party/clang-format/script': {
-    'url': Var('chromium_git') + '/external/github.com/llvm/llvm-project/clang/tools/clang-format.git@47dce8466cd71943f64df3860e608957d6e20007',
+    'url': Var('chromium_git') + '/external/github.com/llvm/llvm-project/clang/tools/clang-format.git@9f796802e5d633c96dbe97e0b6683d5e62594f9f',
     'condition': 'not build_with_chromium',
   },
 
@@ -586,7 +592,7 @@ deps = {
     'packages': [
       {
         'package': 'gn/gn/linux-${{arch}}',
-        'version': 'git_revision:2dfb8cbd3b749242ee4492a7f15eba6889d52c7f',
+        'version': 'git_revision:0e7d98e041b01eb5fed29a9a80482ed8ca9efe5b',
       }
     ],
     'dep_type': 'cipd',
@@ -597,7 +603,7 @@ deps = {
     'packages': [
       {
         'package': 'gn/gn/mac-${{arch}}',
-        'version': 'git_revision:2dfb8cbd3b749242ee4492a7f15eba6889d52c7f',
+        'version': 'git_revision:0e7d98e041b01eb5fed29a9a80482ed8ca9efe5b',
       }
     ],
     'dep_type': 'cipd',
@@ -619,7 +625,7 @@ deps = {
     'packages': [
       {
         'package': 'gn/gn/windows-amd64',
-        'version': 'git_revision:2dfb8cbd3b749242ee4492a7f15eba6889d52c7f',
+        'version': 'git_revision:0e7d98e041b01eb5fed29a9a80482ed8ca9efe5b',
       }
     ],
     'dep_type': 'cipd',
@@ -627,17 +633,17 @@ deps = {
   },
 
   'testing': {
-    'url': '{chromium_git}/chromium/src/testing@e8dcdf3884f156dcc61bfb5ff1c8763343a39ed1',
+    'url': '{chromium_git}/chromium/src/testing@e4a28864b9a3d45c7a4403b678921dcbe25f12d7',
     'condition': 'not build_with_chromium',
   },
 
   'third_party/abseil-cpp': {
-    'url': Var('chromium_git') + '/chromium/src/third_party/abseil-cpp@af5aede14a0b4013be6890148d34e0fd7b1fac69',
+    'url': Var('chromium_git') + '/chromium/src/third_party/abseil-cpp@a00d74bb55b38f213a3c6110b4bcab5bb565bd56',
     'condition': 'not build_with_chromium',
   },
 
   'third_party/android_build_tools': {
-    'url': Var('chromium_git') + '/chromium/src/third_party/android_build_tools@4474d0e61a92c960ebfbafdc5d059a0d70dfe22a',
+    'url': Var('chromium_git') + '/chromium/src/third_party/android_build_tools@30ac541299e85d17b0ab212bedc9cf58f17ac083',
     'condition': 'checkout_android and not build_with_chromium',
   },
 
@@ -693,7 +699,7 @@ deps = {
       'packages': [
           {
                'package': 'chromium/third_party/android_build_tools/error_prone',
-               'version': 'RGU_pYZ7wIDYsomPZurJEevS4IVfXFNvxf_2KIpV_40C',
+               'version': 'VtrBaqQdSQvAxXzQmZ9NxFDw6KODCoK2Z7q7cG8DI6cC',
           },
       ],
       'condition': 'checkout_android and not build_with_chromium',
@@ -715,7 +721,7 @@ deps = {
       'packages': [
           {
                'package': 'chromium/third_party/android_build_tools/lint',
-               'version': 'oB9fcoagRy7pqNv_Lo1-ZhX-R8W5vzcS1MpYOaZJwOcC',
+               'version': 'Ue4-cobneZWgbtfV6s1C-JnlxnJYO9mrhnU5fY_6txcC',
           },
       ],
       'condition': 'checkout_android and not build_with_chromium',
@@ -726,7 +732,7 @@ deps = {
       'packages': [
           {
                'package': 'chromium/third_party/android_build_tools/manifest_merger',
-               'version': 'kjf9USoIN-2IGART4tsug5q5zWnhL3pGAJY7vmGK_GsC',
+               'version': 'XCV77W7I12ZqyOcLJEQ9pALJcYoSwnUfdZQcptTqxI8C',
           },
       ],
       'condition': 'checkout_android and not build_with_chromium',
@@ -745,7 +751,7 @@ deps = {
   },
 
   'third_party/android_deps': {
-    'url': Var('chromium_git') + '/chromium/src/third_party/android_deps@b1bbf37d7f2d0a0b4b0eb4ba5d47a17198c0396e',
+    'url': Var('chromium_git') + '/chromium/src/third_party/android_deps@7358b5eb822daa494407035ed0c81f9db525fba1',
     'condition': 'checkout_android and not build_with_chromium',
   },
 
@@ -803,7 +809,7 @@ deps = {
       'packages': [
           {
               'package': 'chromium/third_party/android_system_sdk/public',
-              'version': 'v45fMxp0I1ypgTGwRUVKh2k2jXxAgAUNvCO-LPFjpaAC',
+              'version': 'D255MWUvuCf4OTntUioxg-A1stinfW8hW3P13YlOrDcC',
           },
       ],
       'condition': 'checkout_android and not build_with_chromium and non_git_source',
@@ -848,7 +854,7 @@ deps = {
   },
 
   'third_party/depot_tools': {
-    'url': Var('chromium_git') + '/chromium/tools/depot_tools.git@56b8271b3f10e046bffac2cfc44b2f81162cd97e',
+    'url': Var('chromium_git') + '/chromium/tools/depot_tools.git@08f34739d842dbef086f2a4459bd29d29c0dfd4e',
     'condition': 'not build_with_chromium',
   },
 
@@ -933,171 +939,171 @@ deps = {
     'condition': 'not build_with_chromium',
     'objects': [
       {
-        'object_name': 'Linux_x64/clang-android-runtime-library-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': '067d9708bdfc6fb95aaac6718a0cb0d7b2299afdafdf7174c06c168c973727d2',
-        'size_bytes': 6205532,
-        'generation': 1790310656290596,
+        'object_name': 'Linux_x64/clang-android-runtime-library-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': '9551f7013b0210e4d291bfe09191682796240d93002b4317673c7fc280045e62',
+        'size_bytes': 6207356,
+        'generation': 1790797384572756,
         'condition': 'checkout_android and non_git_source',
       },
       {
-        'object_name': 'Linux_x64/clang-linux-runtime-library-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': 'bc577c28d8e08b94d608036675b193dc8e67c608216190473568d7391ef01dd9',
-        'size_bytes': 3113128,
-        'generation': 1790310661124342,
+        'object_name': 'Linux_x64/clang-linux-runtime-library-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': '4e5a4831e4eec7408c0809d2033032d157fe82dc16b5096d32b6536ed4b8c43b',
+        'size_bytes': 3102700,
+        'generation': 1790797389651907,
         'condition': 'checkout_linux and not host_os == "linux"',
       },
       {
-        'object_name': 'Linux_x64/clang-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': '7c2b8a48e307e783f4f48ebb954edd97b09d014f6a55a9a94be6d4c34befeef7',
-        'size_bytes': 57250928,
-        'generation': 1790310653278043,
+        'object_name': 'Linux_x64/clang-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': '878495372b935b667f84203f9f62529b6191ff1ac6ab40b9cdf482c84bd1ecab',
+        'size_bytes': 57260672,
+        'generation': 1790797381909597,
         'condition': '(host_os == "linux" or checkout_android) and non_git_source',
       },
       {
-        'object_name': 'Linux_x64/clang-tidy-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': 'c7bc5a43b7c8aaa50d6d1f39097bd421a82109edd81c0c9a80bb589f7bd1bfe2',
-        'size_bytes': 14934972,
-        'generation': 1790310653422928,
+        'object_name': 'Linux_x64/clang-tidy-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': '3815203f9987a08b1bf67555125d95a67c1136de074e6e7dbe11957d70cf784d',
+        'size_bytes': 14944572,
+        'generation': 1790797381856065,
         'condition': 'host_os == "linux" and non_git_source and checkout_clang_tidy',
       },
       {
-        'object_name': 'Linux_x64/clangd-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': 'bb74e6d1a457582b248efa8f206039847ef8d2ddeb989800adcffbb233faac2c',
-        'size_bytes': 15093412,
-        'generation': 1790310653470096,
+        'object_name': 'Linux_x64/clangd-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': '84ee10cf3a4b4cccf9878c464f33eee756751920187d26dfc46481f195b0c177',
+        'size_bytes': 15081268,
+        'generation': 1790797381894014,
         'condition': 'host_os == "linux" and non_git_source',
       },
       {
-        'object_name': 'Linux_x64/llvm-code-coverage-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': '8320455673ac31ebe949338dbc8c03303c8c6d10d67043b7592a796a5f01d161',
-        'size_bytes': 2374784,
-        'generation': 1790310653693901,
+        'object_name': 'Linux_x64/llvm-code-coverage-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': 'f9990e7dc5a3630c8a962726fac172eeff5c6012e027eb342e9df8bc702198c8',
+        'size_bytes': 2373504,
+        'generation': 1790797382242083,
         'condition': 'host_os == "linux" and non_git_source and checkout_clang_coverage_tools',
       },
       {
-        'object_name': 'Linux_x64/llvmobjdump-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': '5260e9693b117f80149b0d0653edac631068879d89130993c12b079d1eabe697',
-        'size_bytes': 5923008,
-        'generation': 1790310653615824,
+        'object_name': 'Linux_x64/llvmobjdump-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': 'ad3042a17255b065a75fa7f9d80be2eb07df0902bd762cec53b9f2f5c3beba87',
+        'size_bytes': 5925392,
+        'generation': 1790797381953168,
         'condition': '((checkout_linux or checkout_mac or checkout_android) and host_os == "linux") and non_git_source',
       },
       {
-        'object_name': 'Mac/clang-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': '437eb8000babd4f9e654b0c041ec2534591d7843e6e44f109e8c2a64bf2363cc',
-        'size_bytes': 53858892,
-        'generation': 1790310662480536,
+        'object_name': 'Mac/clang-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': 'eb03cb8b944dde55677427322bc5a8c6fa0cad4ceacba4653a42c6b1290fea2f',
+        'size_bytes': 53873488,
+        'generation': 1790797391417548,
         'condition': 'host_os == "mac" and host_cpu == "x64"',
       },
       {
-        'object_name': 'Mac/clang-mac-runtime-library-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': 'e716f51aa3297eef0b2be0905144a7ad36c25edf71edc59a3973c5b58c0c8ca6',
-        'size_bytes': 979548,
-        'generation': 1790310669905576,
+        'object_name': 'Mac/clang-mac-runtime-library-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': '31569c5a0a8e133ea5033d3a462273ce65100e0402307319af644ee4fb78d77c',
+        'size_bytes': 978876,
+        'generation': 1790797399057345,
         'condition': 'checkout_mac and not host_os == "mac"',
       },
       {
-        'object_name': 'Mac/clang-tidy-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': 'c4bf894894050a45da54c97130c5aa9364853e1ea981f6aca671f01e193406c7',
-        'size_bytes': 14227328,
-        'generation': 1790310662584359,
+        'object_name': 'Mac/clang-tidy-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': '5dc210d6e7a1f2d8decba74a475bef9457db132a7ae1f4cf0fc4b91fd008e146',
+        'size_bytes': 14224492,
+        'generation': 1790797391469624,
         'condition': 'host_os == "mac" and host_cpu == "x64" and checkout_clang_tidy',
       },
       {
-        'object_name': 'Mac/clangd-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': 'e77ce667efe072259964effe4399673c7d317c171a9032a87f75bffb809d07ab',
-        'size_bytes': 15131512,
-        'generation': 1790310662650866,
+        'object_name': 'Mac/clangd-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': 'f988b7dc66993f8612ac036b62828bcb29315ec9e6927331bf6a32bf986a5df7',
+        'size_bytes': 15131696,
+        'generation': 1790797391569653,
         'condition': 'host_os == "mac" and host_cpu == "x64"',
       },
       {
-        'object_name': 'Mac/llvm-code-coverage-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': '542abd7350c9ef76f3ea3ac0ec354fa711fd3400fe31cb4c2a336f878188a6b6',
-        'size_bytes': 2260768,
-        'generation': 1790310662851608,
+        'object_name': 'Mac/llvm-code-coverage-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': 'acb0db493e23a145f733a871ac868468932be7fb4988fe2b7b9b568e70c45682',
+        'size_bytes': 2260736,
+        'generation': 1790797391738507,
         'condition': 'host_os == "mac" and host_cpu == "x64" and checkout_clang_coverage_tools',
       },
       {
-        'object_name': 'Mac/llvmobjdump-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': 'edeb26b0d4984653eb8a6f114f8c44cff66cf01b63124267bdfec1e278043501',
-        'size_bytes': 5527532,
-        'generation': 1790310662712138,
+        'object_name': 'Mac/llvmobjdump-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': '85b912bf5182b5c7092ce92cdc58a35b5e3d04fa9a49514aa51b28bec4c277fc',
+        'size_bytes': 5524828,
+        'generation': 1790797391756333,
         'condition': 'host_os == "mac" and host_cpu == "x64"',
       },
       {
-        'object_name': 'Mac_arm64/clang-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': '1e1a091436a52d714a4ae2ec8fb5884db78b80098ad120eff21db5fd63727400',
-        'size_bytes': 44490412,
-        'generation': 1790310671289626,
+        'object_name': 'Mac_arm64/clang-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': 'bbf4ee5fc42bf134aee682d6afaaaddcc64415d20b080e349a45abf6df927070',
+        'size_bytes': 44508976,
+        'generation': 1790797400949995,
         'condition': 'host_os == "mac" and host_cpu == "arm64"',
       },
       {
-        'object_name': 'Mac_arm64/clang-tidy-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': '0eca8b84a7edab5417fc68fe6fa19d57e28fbebf4ae9408a5dfeacf5f11bd31c',
-        'size_bytes': 12224952,
-        'generation': 1790310671400640,
+        'object_name': 'Mac_arm64/clang-tidy-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': '35b3e2e5eee220259f7908eaf208507aba78f7cfb8dd990c9854558f056ad890',
+        'size_bytes': 12220676,
+        'generation': 1790797401142057,
         'condition': 'host_os == "mac" and host_cpu == "arm64" and checkout_clang_tidy',
       },
       {
-        'object_name': 'Mac_arm64/clangd-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': '3e0e13571f5ff31960091c91ab480d8ba40b411c9334049fe7c921094f2e1171',
-        'size_bytes': 12236444,
-        'generation': 1790310671426415,
+        'object_name': 'Mac_arm64/clangd-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': '5dff03b1fdf59ffe374d6c55deb07c65791825737487a7ec2b39d80539144c6b',
+        'size_bytes': 12229100,
+        'generation': 1790797401064932,
         'condition': 'host_os == "mac" and host_cpu == "arm64"',
       },
       {
-        'object_name': 'Mac_arm64/llvm-code-coverage-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': '44fc343c8c35dd753763eff263d876495d85ef28f06eb217bca1adb0f74af8ab',
-        'size_bytes': 1861464,
-        'generation': 1790310671606933,
+        'object_name': 'Mac_arm64/llvm-code-coverage-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': '1d92f7504529998f971fffbb2dd6214273ed3e6bcfe66e5ca9c1227856df5b4b',
+        'size_bytes': 1861564,
+        'generation': 1790797401395439,
         'condition': 'host_os == "mac" and host_cpu == "arm64" and checkout_clang_coverage_tools',
       },
       {
-        'object_name': 'Mac_arm64/llvmobjdump-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': '5f4dcceaa0494484f793102e52ee9e7345378a5236967a7acb53843e6b57aa85',
-        'size_bytes': 5222072,
-        'generation': 1790310671487269,
+        'object_name': 'Mac_arm64/llvmobjdump-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': '0db8f38d5928777104b9d04fc4bcf9c19c17ea252a0745ca038565e3094be9d4',
+        'size_bytes': 5235388,
+        'generation': 1790797401139458,
         'condition': 'host_os == "mac" and host_cpu == "arm64"',
       },
       {
-        'object_name': 'Win/clang-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': 'a4f21c17628c6ed33712ba3d9643080af10c0306e7ae71ef26c8e3865508c093',
-        'size_bytes': 51805184,
-        'generation': 1790310680456516,
+        'object_name': 'Win/clang-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': '86ac9f61c4350f17d7571e402d5fa5f2367015d72ea8efbc4e1e52e843c74fb0',
+        'size_bytes': 51822620,
+        'generation': 1790797410692058,
         'condition': 'host_os == "win"',
       },
       {
-        'object_name': 'Win/clang-tidy-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': 'c91ec71de3f6b359e6ce7a9ad133d4a359f3af899d5a0c457a7cc6a28575558b',
-        'size_bytes': 15144104,
-        'generation': 1790310680645168,
+        'object_name': 'Win/clang-tidy-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': '7d428d76bf66dd603860270ba0a41e88bbbb66c32770aae541c3a6777a9eb57f',
+        'size_bytes': 15133896,
+        'generation': 1790797410629185,
         'condition': 'host_os == "win" and checkout_clang_tidy',
       },
       {
-        'object_name': 'Win/clang-win-runtime-library-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': 'f1a7e72d32a25a0b42092d7e28e4d11b0a34c8ec40bd7a93059ced335345d2ed',
-        'size_bytes': 2651760,
-        'generation': 1790310688070634,
+        'object_name': 'Win/clang-win-runtime-library-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': '0ea5939bf24f293c63621b81d90a88284b6d6563a51be1304b73d2cf92537ffc',
+        'size_bytes': 2652404,
+        'generation': 1790797418368249,
         'condition': 'checkout_win and not host_os == "win"',
       },
       {
-        'object_name': 'Win/clangd-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': '4ad96b0851e6c887b1bc24c1014b6b8878009b2039922c9b6084944f9ebf4763',
-        'size_bytes': 15438364,
-        'generation': 1790310680745621,
+        'object_name': 'Win/clangd-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': '70955f11ea7a22b25807d00b97351c3853d8a9b1e8d1d08c165bc015320858c1',
+        'size_bytes': 15434728,
+        'generation': 1790797563126146,
        'condition': 'host_os == "win"',
       },
       {
-        'object_name': 'Win/llvm-code-coverage-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': 'e779b7603d3db3863e2602894d0af081111a3930b4e97eb01a1b0dc52ddcf2ac',
-        'size_bytes': 2528076,
-        'generation': 1790310681000598,
+        'object_name': 'Win/llvm-code-coverage-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': 'b07c06d983817b4f98878bcc264825835efbd9e5548a18a7d6dfb7623b9c4024',
+        'size_bytes': 2527180,
+        'generation': 1790797410912461,
         'condition': 'host_os == "win" and checkout_clang_coverage_tools',
       },
       {
-        'object_name': 'Win/llvmobjdump-llvmorg-24-init-7747-g62397f8b-42.tar.xz',
-        'sha256sum': 'd0eae9739b414770e7c1d541b99d2586e433350d852a799e7fe76d318e4e83c0',
-        'size_bytes': 6016184,
-        'generation': 1790310680833197,
+        'object_name': 'Win/llvmobjdump-llvmorg-24-init-7747-g62397f8b-57.tar.xz',
+        'sha256sum': '7b34bdb18311a40a234c19860b2c289f6cd7ce16f12d3a449dcf6db6dff043eb',
+        'size_bytes': 6010064,
+        'generation': 1790797410754258,
         'condition': '(checkout_linux or checkout_mac or checkout_android) and host_os == "win"',
       },
     ]
@@ -1132,17 +1138,17 @@ deps = {
   },
 
   'third_party/libc++abi/src': {
-    'url': Var('chromium_git') + '/external/github.com/llvm/llvm-project/libcxxabi.git@127292c11d332549ba1e0aebcece6d4c91de9239',
+    'url': Var('chromium_git') + '/external/github.com/llvm/llvm-project/libcxxabi.git@09351f6ec00c2b65f2d03585ae6da07098b024dc',
     'condition': 'not build_with_chromium',
   },
 
   'third_party/llvm-libc/src': {
-    'url': Var('chromium_git') + '/external/github.com/llvm/llvm-project/libc.git@ffb2c561c35da92f5f7b11c1b6934de43ba2baac',
+    'url': Var('chromium_git') + '/external/github.com/llvm/llvm-project/libc.git@14e51fd2cd7ec21294f18a3a0b2fc5339afea271',
     'condition': 'not build_with_chromium',
   },
 
   'third_party/libunwind/src': {
-    'url': Var('chromium_git') + '/external/github.com/llvm/llvm-project/libunwind.git@8d41badfccd4bc7dfd17817f65217f2868d69be8',
+    'url': Var('chromium_git') + '/external/github.com/llvm/llvm-project/libunwind.git@c4438dd4178c627697459a12c54eb1f7f8eefd12',
     'condition': 'not build_with_chromium',
   },
 
@@ -1210,7 +1216,7 @@ deps = {
   },
 
   'third_party/protobuf': {
-    'url': Var('chromium_git') + '/chromium/src/third_party/protobuf@e3c8a6661d6f93ac4841cb2f0118af920efea464',
+    'url': Var('chromium_git') + '/chromium/src/third_party/protobuf@18a42733eaf8bd7b03567f7b876ca2f2e1e7bc0e',
     'condition': 'not build_with_chromium',
   },
 
@@ -1223,7 +1229,7 @@ deps = {
       'packages': [
           {
               'package': 'chromium/third_party/r8',
-              'version': 'w54n0EzIuf2nxIQEJKv3LqGFqg_hJ-HDBOAxQWcu46IC',
+              'version': 'P7Pq70iaBKGCBVqKGS1XPUFyG7yWFSBWVy7yOBsghLcC',
           },
       ],
       'condition': 'checkout_android and not build_with_chromium',
@@ -1259,7 +1265,7 @@ deps = {
   },
 
   'third_party/rust': {
-    'url': Var('chromium_git') + '/chromium/src/third_party/rust@2c8464d5992f7e7aa9e5825936c5a0cdf3733e35',
+    'url': Var('chromium_git') + '/chromium/src/third_party/rust@b8c38a533c84f01fe194fed455f1d53132b0cf36',
     'condition': 'not build_with_chromium',
   },
 
@@ -1288,7 +1294,7 @@ deps = {
       'packages': [
           {
               'package': 'chromium/third_party/turbine',
-              'version': 'rqbGMhci4trzUCXgMBzoRMpTKADs_F5sWUKJXxsu6BYC',
+              'version': 'lLSvuXDQIBq-skHpEV38DETcvq3t2lL9rc2VpxEj-h4C',
           },
       ],
       'condition': 'checkout_android and not build_with_chromium',
@@ -1300,17 +1306,17 @@ deps = {
   },
 
   'third_party/vulkan-deps': {
-    'url': Var('chromium_git') + '/vulkan-deps@002bec5172d9daa7c8841d7170310e344e4883b2',
+    'url': Var('chromium_git') + '/vulkan-deps@1b7ced3670c353fccae704082005ebf7599bcd05',
     'condition': 'not build_with_chromium',
   },
 
   'third_party/glslang/src': {
-    'url': '{chromium_git}/external/github.com/KhronosGroup/glslang@b11e161935ddd143df9e070834e62d94377043b8',
+    'url': '{chromium_git}/external/github.com/KhronosGroup/glslang@c8095022ee39c7482071bc3177f93f4bca42a6d9',
     'condition': 'not build_with_chromium',
   },
 
   'third_party/lunarg-vulkantools/src': {
-    'url': '{chromium_git}/external/github.com/LunarG/VulkanTools@e3782cba07b8b479bf194ac9d811bd3a09261aba',
+    'url': '{chromium_git}/external/github.com/LunarG/VulkanTools@98254945250cdf47d66779d427bed964071d7271',
     'condition': 'not build_with_chromium',
   },
 
@@ -1320,37 +1326,37 @@ deps = {
   },
 
   'third_party/spirv-headers/src': {
-    'url': '{chromium_git}/external/github.com/KhronosGroup/SPIRV-Headers@f1fa5178eced755a189619b8e4546bcc2ce69fdd',
+    'url': '{chromium_git}/external/github.com/KhronosGroup/SPIRV-Headers@cb42dec3830d3ac67fa449ecdc0c0f73d5e74498',
     'condition': 'not build_with_chromium',
   },
 
   'third_party/spirv-tools/src': {
-    'url': '{chromium_git}/external/github.com/KhronosGroup/SPIRV-Tools@1d0401cd2b68ae34cda9ff625bedd1be4ed6214a',
+    'url': '{chromium_git}/external/github.com/KhronosGroup/SPIRV-Tools@4f3a92dfbd5b49593e43b3c245b6688da2ad933a',
     'condition': 'not build_with_chromium',
   },
 
   'third_party/vulkan-headers/src': {
-    'url': '{chromium_git}/external/github.com/KhronosGroup/Vulkan-Headers@6802bb4733b63ed5efd3adb308a6c885ef180ea1',
+    'url': '{chromium_git}/external/github.com/KhronosGroup/Vulkan-Headers@c46850864f4661461b0f6cb9922c058ffea4915e',
     'condition': 'not build_with_chromium',
   },
 
   'third_party/vulkan-loader/src': {
-    'url': '{chromium_git}/external/github.com/KhronosGroup/Vulkan-Loader@d2ef0c162c4ed997cff870f2f0914f52b23f2401',
+    'url': '{chromium_git}/external/github.com/KhronosGroup/Vulkan-Loader@f866657ff687a36d767cd7783bab800e31ebafaa',
     'condition': 'not build_with_chromium',
   },
 
   'third_party/vulkan-tools/src': {
-    'url': '{chromium_git}/external/github.com/KhronosGroup/Vulkan-Tools@6fe2055cf2fa921d52a4c6a31528cfc279a6977f',
+    'url': '{chromium_git}/external/github.com/KhronosGroup/Vulkan-Tools@f13d435dd50dc616db0c10e7bac87cd3aa7c82e3',
     'condition': 'not build_with_chromium',
   },
 
   'third_party/vulkan-utility-libraries/src': {
-    'url': '{chromium_git}/external/github.com/KhronosGroup/Vulkan-Utility-Libraries@89042504f261a90d835bac9de636820a0fe7a4cf',
+    'url': '{chromium_git}/external/github.com/KhronosGroup/Vulkan-Utility-Libraries@68b0ae52a6cc8de7df3af7b549e9a2efa7c78d8a',
     'condition': 'not build_with_chromium',
   },
 
   'third_party/vulkan-validation-layers/src': {
-    'url': '{chromium_git}/external/github.com/KhronosGroup/Vulkan-ValidationLayers@e86affb3d2a0e805d7672948b64bfca19549f18e',
+    'url': '{chromium_git}/external/github.com/KhronosGroup/Vulkan-ValidationLayers@394ccee0f6d2d202d0755a85b8a111c6a97511ef',
     'condition': 'not build_with_chromium',
   },
 
@@ -1377,12 +1383,12 @@ deps = {
   },
 
   'tools/android': {
-    'url': Var('chromium_git') + '/chromium/src/tools/android@f744a6061a50ecfb53f27e9063c94419600ff363',
+    'url': Var('chromium_git') + '/chromium/src/tools/android@46cd5844bf6cc592a654a24f8376fc97c7829b74',
     'condition': 'checkout_android and not build_with_chromium',
   },
 
   'tools/clang': {
-    'url': Var('chromium_git') + '/chromium/src/tools/clang.git@d5a75b10de9bdc0d7e3906fbcac26573d6253e80',
+    'url': Var('chromium_git') + '/chromium/src/tools/clang.git@61139bae960b32e79d9c923d25d9e9922196b171',
     # Needed on Mac in order to get the hashes for dsymutil.
     # Needed on other platforms since //build/config/config/BUILD.gn depends on
     # //tools/clang/scripts/update.py.
@@ -1409,7 +1415,7 @@ deps = {
   },
 
   'tools/mb': {
-    'url': Var('chromium_git') + '/chromium/src/tools/mb@80541b33fb792342605f719cc9e5a4b1b3d1e6e8',
+    'url': Var('chromium_git') + '/chromium/src/tools/mb@46d00d031ad908563088220923f4d963aba2eb7d',
     'condition': 'not build_with_chromium',
   },
 
@@ -1424,7 +1430,7 @@ deps = {
   },
 
   'tools/perf': {
-    'url': Var('chromium_git') + '/chromium/src/tools/perf@f300772d1bbf371f7a9d204e437b98c7c333c1e8',
+    'url': Var('chromium_git') + '/chromium/src/tools/perf@23a69ee66a37e18fd651913234f4de47b2e194e1',
     'condition': 'not build_with_chromium',
   },
 
@@ -1439,7 +1445,7 @@ deps = {
   },
 
   'tools/rust': {
-    'url': Var('chromium_git') + '/chromium/src/tools/rust.git@e04fff1fe9dd8307934c85dfcb1bb6741ce627f1',
+    'url': Var('chromium_git') + '/chromium/src/tools/rust.git@e35a33e7cb2d217599854d611db8083d5a81c747',
     'condition': 'not build_with_chromium',
   },
 
@@ -1493,7 +1499,7 @@ deps = {
   },
 
   'tools/win': {
-    'url': Var('chromium_git') + '/chromium/src/tools/win@13cb6e5d223dc49eadd082d3aef4c2a5b0e4c0a0',
+    'url': Var('chromium_git') + '/chromium/src/tools/win@ae34cdd9867c5d2b185fadc9d4a9cc82bb741760',
     'condition': 'checkout_win and not build_with_chromium',
   },
 
@@ -2048,6 +2054,16 @@ deps = {
       'dep_type': 'cipd',
       'condition': 'checkout_angle_restricted_trace_bubble_shooter_and_friends',
   },
+  'src/tests/restricted_traces/bubble_shooter_pop_bubbles': {
+      'packages': [
+        {
+            'package': 'angle/traces/bubble_shooter_pop_bubbles',
+            'version': 'version:1',
+        },
+      ],
+      'dep_type': 'cipd',
+      'condition': 'checkout_angle_restricted_trace_bubble_shooter_pop_bubbles',
+  },
   'src/tests/restricted_traces/bubble_shooter_relaxing': {
       'packages': [
         {
@@ -2477,6 +2493,16 @@ deps = {
       ],
       'dep_type': 'cipd',
       'condition': 'checkout_angle_restricted_trace_dota_underlords',
+  },
+  'src/tests/restricted_traces/doubleu_casino': {
+      'packages': [
+        {
+            'package': 'angle/traces/doubleu_casino',
+            'version': 'version:1',
+        },
+      ],
+      'dep_type': 'cipd',
+      'condition': 'checkout_angle_restricted_trace_doubleu_casino',
   },
   'src/tests/restricted_traces/downwell': {
       'packages': [
@@ -2908,6 +2934,16 @@ deps = {
       'dep_type': 'cipd',
       'condition': 'checkout_angle_restricted_trace_grimvalor',
   },
+  'src/tests/restricted_traces/guns_of_glory_lost_island': {
+      'packages': [
+        {
+            'package': 'angle/traces/guns_of_glory_lost_island',
+            'version': 'version:2',
+        },
+      ],
+      'dep_type': 'cipd',
+      'condition': 'checkout_angle_restricted_trace_guns_of_glory_lost_island',
+  },
   'src/tests/restricted_traces/gwent_witcher_card_game': {
       'packages': [
         {
@@ -3242,7 +3278,7 @@ deps = {
       'packages': [
         {
             'package': 'angle/traces/last_shelter_survival',
-            'version': 'version:1',
+            'version': 'version:2',
         },
       ],
       'dep_type': 'cipd',
@@ -4007,6 +4043,16 @@ deps = {
       ],
       'dep_type': 'cipd',
       'condition': 'checkout_angle_restricted_trace_plague_inc',
+  },
+  'src/tests/restricted_traces/plants_vs_zombies': {
+      'packages': [
+        {
+            'package': 'angle/traces/plants_vs_zombies',
+            'version': 'version:1',
+        },
+      ],
+      'dep_type': 'cipd',
+      'condition': 'checkout_angle_restricted_trace_plants_vs_zombies',
   },
   'src/tests/restricted_traces/plants_vs_zombies_2': {
       'packages': [
@@ -5298,6 +5344,16 @@ deps = {
       'dep_type': 'cipd',
       'condition': 'checkout_angle_restricted_trace_wuthering_waves',
   },
+  'src/tests/restricted_traces/wwe_supercard': {
+      'packages': [
+        {
+            'package': 'angle/traces/wwe_supercard',
+            'version': 'version:1',
+        },
+      ],
+      'dep_type': 'cipd',
+      'condition': 'checkout_angle_restricted_trace_wwe_supercard',
+  },
   'src/tests/restricted_traces/yalla_ludo': {
       'packages': [
         {
@@ -5337,6 +5393,16 @@ deps = {
       ],
       'dep_type': 'cipd',
       'condition': 'checkout_angle_restricted_trace_zombie_smasher',
+  },
+  'src/tests/restricted_traces/zombie_waves': {
+      'packages': [
+        {
+            'package': 'angle/traces/zombie_waves',
+            'version': 'version:1',
+        },
+      ],
+      'dep_type': 'cipd',
+      'condition': 'checkout_angle_restricted_trace_zombie_waves',
   },
   # === ANGLE Restricted Trace Generated Code End ===
 
