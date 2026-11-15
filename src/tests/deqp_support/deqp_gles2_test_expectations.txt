@@ -346,8 +346,6 @@
 356399840 WGPU : dEQP-GLES2.functional.shaders.builtin_variable.depth_range* = FAIL
 356399840 WGPU : dEQP-GLES2.functional.shaders.builtin_variable.fragcoord_xyz = FAIL
 356399840 AST WGPU : dEQP-GLES2.functional.shaders.builtin_variable.pointcoord = FAIL
-356399840 WGPU : dEQP-GLES2.functional.shaders.constant_expressions.* = FAIL
-356399840 WGPU : dEQP-GLES2.functional.shaders.constants.bool_* = FAIL
 356399840 WGPU : dEQP-GLES2.functional.shaders.conversions.* = FAIL
 356399840 WGPU : dEQP-GLES2.functional.shaders.discard.* = FAIL
 356399840 WGPU : dEQP-GLES2.functional.shaders.fragdata.* = FAIL
@@ -356,7 +354,6 @@
 356399840 WGPU : dEQP-GLES2.functional.shaders.functions.control_flow.* = FAIL
 356399840 WGPU : dEQP-GLES2.functional.shaders.functions.datatypes.* = FAIL
 356399840 WGPU : dEQP-GLES2.functional.shaders.functions.misc.* = FAIL
-356399840 WGPU : dEQP-GLES2.functional.shaders.functions.overloading.* = FAIL
 356399840 WGPU : dEQP-GLES2.functional.shaders.functions.qualifiers.* = FAIL
 356399840 WGPU : dEQP-GLES2.functional.shaders.indexing.* = FAIL
 356399840 WGPU : dEQP-GLES2.functional.shaders.linkage.* = FAIL
@@ -432,6 +429,7 @@
 42267100 IR WGPU : dEQP-GLES2.functional.fbo.render.shared_colorbuffer_clear.* = FAIL
 42267100 IR WGPU : dEQP-GLES2.functional.fbo.render.shared_depthbuffer.* = FAIL
 42267100 IR WGPU : dEQP-GLES2.functional.fbo.render.stencil_clear.* = FAIL
+42267100 IR WGPU : dEQP-GLES2.functional.fbo.render.texsubimage.* = FAIL
 42267100 IR WGPU : dEQP-GLES2.functional.texture.filtering.2d.linear_* = FAIL
 42267100 IR WGPU : dEQP-GLES2.functional.texture.filtering.2d.nearest_* = FAIL
 42267100 IR WGPU : dEQP-GLES2.functional.texture.mipmap.2d.affine.* = FAIL
@@ -439,6 +437,10 @@
 42267100 IR WGPU : dEQP-GLES2.functional.texture.mipmap.2d.bias.* = FAIL
 42267100 IR WGPU : dEQP-GLES2.functional.texture.mipmap.2d.generate.* = FAIL
 42267100 IR WGPU : dEQP-GLES2.functional.texture.mipmap.2d.projected.* = FAIL
+42267100 IR WGPU : dEQP-GLES2.functional.texture.specification.*.*rgb565* = FAIL
+42267100 IR WGPU : dEQP-GLES2.functional.texture.specification.*.*rgb888* = FAIL
+42267100 IR WGPU : dEQP-GLES2.functional.texture.specification.*.*rgba4444* = FAIL
+42267100 IR WGPU : dEQP-GLES2.functional.texture.specification.*.*rgba5551* = FAIL
 42267100 IR WGPU : dEQP-GLES2.functional.texture.wrap.* = FAIL
 42267100 IR WGPU : dEQP-GLES2.functional.texture.units.* = FAIL
 42267100 IR WGPU : dEQP-GLES2.functional.shaders.texture_functions.fragment.* = FAIL

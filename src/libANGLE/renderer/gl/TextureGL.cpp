@@ -731,6 +731,9 @@ angle::Result TextureGL::setSubImage3DFromUnpackBufferViaCpu(const gl::Context *
     StateManagerGL *stateManager       = GetStateManagerGL(context);
     const angle::FeaturesGL &features  = GetFeaturesGL(context);
     const gl::InternalFormat &glFormat = gl::GetInternalFormatInfo(format, type);
+    // The unsized (format, type) pair must resolve to a valid format so byte counts are non-zero
+    // before copying from the unpack buffer into the scratch buffer.
+    ASSERT(glFormat.internalFormat != GL_NONE);
 
     GLuint rowBytes   = 0;
     GLuint imageBytes = 0;
@@ -748,6 +751,7 @@ angle::Result TextureGL::setSubImage3DFromUnpackBufferViaCpu(const gl::Context *
     const size_t startOffset = reinterpret_cast<uintptr_t>(pixels) + static_cast<size_t>(skipBytes);
     const size_t allocBytes =
         std::max<size_t>(copyBytes, static_cast<size_t>(area.depth) * imageBytes);
+    ASSERT(copyBytes > 0 && allocBytes > 0);
 
     angle::MemoryBuffer *scratchBuffer = nullptr;
     ANGLE_CHECK_GL_ALLOC(contextGL, context->getScratchBuffer(allocBytes, &scratchBuffer));
@@ -1136,25 +1140,16 @@ angle::Result TextureGL::syncVirtualMipchain(const gl::Context *context)
             }
         }
 
-        // 2. Allocate newTexID with immutable glTexStorage* for [baseLevel, baseLevel +
-        // validLevels).
-        GLuint newTexID = mTextureID;
-        if (oldMipchainLevels > 0)
-        {
-            ANGLE_GL_TRY(context, functions->genTextures(1, &newTexID));
-        }
-        angle::Result allocResult =
-            allocateTexStorage(context, newTexID, getType(), validLevels, baseFormat, baseSize);
-        if (allocResult != angle::Result::Continue)
-        {
-            if (oldMipchainLevels > 0)
-            {
-                stateManager->deleteTexture(newTexID);
-            }
-            return allocResult;
-        }
+        // 2. Always allocate a fresh newTex.id with immutable glTexStorage* for [baseLevel,
+        // baseLevel + validLevels). Never allocate glTexStorage* in-place on mTextureID even when
+        // oldMipchainLevels == 0, because mTextureID may already be natively attached to an FBO via
+        // the undefined-level fallback in getNativeLevelTarget (https://crbug.com/577360319).
+        ScopedTextureGL newTex(stateManager);
+        ANGLE_GL_TRY(context, functions->genTextures(1, &newTex.id));
+        ANGLE_TRY(
+            allocateTexStorage(context, newTex.id, getType(), validLevels, baseFormat, baseSize));
 
-        // 3. Populate newTexID from either virtualLevels[idx].texID or oldTextureID.
+        // 3. Populate newTex.id from either virtualLevels[idx].texID or oldTextureID.
         for (size_t k = 0; k < validLevels; ++k)
         {
             size_t level       = baseLevel + k;
@@ -1166,8 +1161,8 @@ angle::Result TextureGL::syncVirtualMipchain(const gl::Context *context)
                 {
                     gl::TextureTarget srcTarget =
                         gl::IsCubeMapFaceTarget(target) ? gl::TextureTarget::_2D : target;
-                    ANGLE_TRY(copyBetweenNativeLevels(context, vLevel.texID, srcTarget, 0, newTexID,
-                                                      target, dstLevel, vLevel));
+                    ANGLE_TRY(copyBetweenNativeLevels(context, vLevel.texID, srcTarget, 0,
+                                                      newTex.id, target, dstLevel, vLevel));
                     stateManager->deleteTexture(vLevel.texID);
                     vLevel.texID = 0;
                     if (!gl::IsCubeMapFaceTarget(target) &&
@@ -1182,7 +1177,7 @@ angle::Result TextureGL::syncVirtualMipchain(const gl::Context *context)
                 {
                     GLint srcLevel = static_cast<GLint>(level - oldMipchainBaseLevel);
                     ANGLE_TRY(copyBetweenNativeLevels(context, oldTextureID, target, srcLevel,
-                                                      newTexID, target, dstLevel, vLevel));
+                                                      newTex.id, target, dstLevel, vLevel));
                 }
                 return angle::Result::Continue;
             };
@@ -1200,20 +1195,17 @@ angle::Result TextureGL::syncVirtualMipchain(const gl::Context *context)
             }
         }
 
-        if (oldMipchainLevels > 0)
-        {
-            stateManager->deleteTexture(oldTextureID);
-            mTextureID = newTexID;
+        stateManager->deleteTexture(oldTextureID);
+        mTextureID = newTex.release();
 
-            mAppliedSwizzle                 = gl::SwizzleState();
-            mAppliedSampler                 = gl::SamplerState::CreateDefaultForTarget(getType());
-            mAppliedMaxLevel                = gl::kInitialMaxLevel;
-            mAppliedDepthStencilTextureMode = GL_DEPTH_COMPONENT;
-            mLocalDirtyBits |= mAllModifiedDirtyBits;
-            if (mLocalDirtyBits.any())
-            {
-                onStateChange(angle::SubjectMessage::DirtyBitsFlagged);
-            }
+        mAppliedSwizzle                 = gl::SwizzleState();
+        mAppliedSampler                 = gl::SamplerState::CreateDefaultForTarget(getType());
+        mAppliedMaxLevel                = gl::kInitialMaxLevel;
+        mAppliedDepthStencilTextureMode = GL_DEPTH_COMPONENT;
+        mLocalDirtyBits |= mAllModifiedDirtyBits;
+        if (mLocalDirtyBits.any())
+        {
+            onStateChange(angle::SubjectMessage::DirtyBitsFlagged);
         }
 
         mVirtualMipChain->baseLevel         = baseLevel;
@@ -1230,16 +1222,20 @@ angle::Result TextureGL::syncVirtualMipchain(const gl::Context *context)
         onStateChange(angle::SubjectMessage::ObjectReallocated);
         stateManager->onProgramTextureAndImageBindingsChanged();
 
-        // ObjectReallocated marks all FBOs with this texture attached dirty; unbound FBOs will
-        // sync when bound, while the currently bound FBOs must be re-synced here because
-        // State::syncDirtyObjects syncs framebuffers before textures.
+        // ObjectReallocated marks all FBOs with this texture attached dirty; unbound or incomplete
+        // FBOs will sync when bound and complete, while the currently bound front-end complete FBOs
+        // must be re-synced here because State::syncDirtyObjects syncs framebuffers before
+        // textures. Check checkStatusWithGLFrontEnd rather than isComplete to avoid re-entrantly
+        // calling syncAllDrawAttachmentState or issuing a native glCheckFramebufferStatus call.
         gl::Framebuffer *readFBO = context->getState().getReadFramebuffer();
-        if (readFBO && readFBO->hasAnyDirtyBit())
+        if (readFBO && !readFBO->isDefault() && readFBO->hasAnyDirtyBit() &&
+            readFBO->checkStatusWithGLFrontEnd(context).isComplete())
         {
             ANGLE_TRY(readFBO->syncState(context, GL_READ_FRAMEBUFFER, gl::Command::Other));
         }
         gl::Framebuffer *drawFBO = context->getState().getDrawFramebuffer();
-        if (drawFBO && drawFBO->hasAnyDirtyBit())
+        if (drawFBO && !drawFBO->isDefault() && drawFBO->hasAnyDirtyBit() &&
+            drawFBO->checkStatusWithGLFrontEnd(context).isComplete())
         {
             ANGLE_TRY(drawFBO->syncState(context, GL_DRAW_FRAMEBUFFER, gl::Command::Other));
         }
@@ -1455,8 +1451,7 @@ angle::Result TextureGL::setImageHelper(const gl::Context *context,
     stateManager->bindTexture(getType(), mTextureID);
 
     if (features.recreateTextureOnTexImage3dDepthIncrease.enabled &&
-        getType() == gl::TextureType::_3D && !mState.getImmutableFormat() &&
-        functions->copyImageSubData)
+        getType() == gl::TextureType::_3D && !mState.getImmutableFormat())
     {
         ANGLE_TRY(recreateTextureOnTexImage3DDepthIncreaseWorkaround(context, target, level, size));
     }
@@ -1713,6 +1708,7 @@ angle::Result TextureGL::setSubImageRowByRowWorkaround(const gl::Context *contex
     ANGLE_TRY(stateManager->setPixelUnpackBuffer(context, unpackBuffer));
 
     const gl::InternalFormat &glFormat = gl::GetInternalFormatInfo(format, type);
+    ASSERT(glFormat.internalFormat != GL_NONE);
 
     GLuint rowBytes    = 0;
     GLuint imageBytes  = 0;
@@ -1722,6 +1718,7 @@ angle::Result TextureGL::setSubImageRowByRowWorkaround(const gl::Context *contex
     ANGLE_CHECK_GL_MATH(contextGL, glFormat.computeRowDepthSkipBytes(
                                        type, area.width, area.height, unpack, useTexImage3D,
                                        &rowBytes, &imageBytes, &skipBytes));
+    ASSERT(rowBytes > 0);
 
     GLint rowsPerChunk =
         std::min(std::max(static_cast<GLint>(maxBytesUploadedPerChunk / rowBytes), 1), area.height);
@@ -1758,7 +1755,8 @@ angle::Result TextureGL::setSubImageRowByRowWorkaround(const gl::Context *contex
         ASSERT(nativegl::UseTexImage2D(bindType));
         if (area.height == 1 && maxBytesUploadedPerChunk > 0 && maxBytesUploadedPerChunk < rowBytes)
         {
-            GLuint pixelBytes    = glFormat.computePixelBytes(type);
+            GLuint pixelBytes = glFormat.computePixelBytes(type);
+            ASSERT(pixelBytes > 0);
             GLint pixelsPerChunk = std::min(
                 std::max(static_cast<GLint>(maxBytesUploadedPerChunk / pixelBytes), 1), area.width);
             for (GLint col = 0; col < area.width; col += pixelsPerChunk)
@@ -2876,12 +2874,10 @@ angle::Result TextureGL::setStorage(const gl::Context *context,
 
     if (features.virtualizeBaseLevelAndMipchain.enabled && isVirtualMipchainType())
     {
-        clearVirtualLevels(context);
-        if (mVirtualMipChain.has_value() && mVirtualMipChain->levels > 0)
-        {
-            ANGLE_TRY(recreateTexture(context));
-        }
-        mVirtualMipChain.reset();
+        // Always recreate mTextureID before calling glTexStorage*, even when mVirtualMipChain was
+        // not yet initialized or had levels == 0, in case mTextureID was already natively attached
+        // to an FBO while storage-less (https://crbug.com/577360319).
+        ANGLE_TRY(recreateTexture(context));
 
         ANGLE_TRY(allocateTexStorage(context, mTextureID, type, levels,
                                      texStorageFormat.internalFormat, size));
@@ -4777,6 +4773,23 @@ angle::Result TextureGL::recreateTextureOnTexImage3DDepthIncreaseWorkaround(
         return angle::Result::Continue;
     }
 
+    // The contents of the other levels are preserved in the new texture with glCopyImageSubData.
+    // If it is unavailable and any other level has contents, fail instead of letting the driver
+    // redefine the level in place, which is what triggers the driver bug.  On hardened contexts
+    // (such as WebGL contexts), this error loses the context.  Without other levels to preserve,
+    // the texture can still be recreated.
+    if (functions->copyImageSubData == nullptr)
+    {
+        for (size_t l = 0; l < mState.getImageDescs().size(); ++l)
+        {
+            ANGLE_CHECK(GetImplAs<ContextGL>(context),
+                        l == level || mState.getImageDesc(target, l).size.empty(),
+                        "Increasing the depth of a level of a 3D texture with other levels "
+                        "defined requires glCopyImageSubData.",
+                        GL_INVALID_OPERATION);
+        }
+    }
+
     GLuint oldTextureID = mTextureID;
 
     stateManager->bindTexture(getType(), oldTextureID);
@@ -4794,6 +4807,11 @@ angle::Result TextureGL::recreateTextureOnTexImage3DDepthIncreaseWorkaround(
     mAppliedSampler.setMagFilter(GL_NEAREST);
     mAppliedBaseLevel = 0;
     mAppliedMaxLevel  = gl::kInitialMaxLevel;
+
+    // The levels of the new texture are allocated without data, which must not be sourced from the
+    // pixel unpack buffer bound by the application.
+    GLuint prevUnpackBuffer = stateManager->getBufferID(gl::BufferBinding::PixelUnpack);
+    stateManager->bindBuffer(gl::BufferBinding::PixelUnpack, 0, context->isHardenedContext());
 
     for (size_t l = 0; l < mState.getImageDescs().size(); ++l)
     {
@@ -4839,13 +4857,21 @@ angle::Result TextureGL::recreateTextureOnTexImage3DDepthIncreaseWorkaround(
                                         0, 0, desc.size.width, desc.size.height, desc.size.depth));
     }
 
+    stateManager->bindBuffer(gl::BufferBinding::PixelUnpack, prevUnpackBuffer,
+                             context->isHardenedContext());
+
     stateManager->deleteTexture(oldTextureID);
+    // deleteTexture() changes the active texture unit if the old texture is bound to another unit.
+    // The caller defines the requested level in the texture bound to the active unit, so make sure
+    // that is the new texture.
+    stateManager->bindTexture(getType(), mTextureID);
 
     // The new texture's filters and base/max levels were changed above to make the levels
     // complete for copyImageSubData, and mAppliedSampler/mAppliedBaseLevel/mAppliedMaxLevel track
     // those native values. These states may never have been modified by the application, so they
     // may not be in mAllModifiedDirtyBits; flag them explicitly so syncState() restores them.
-    mLocalDirtyBits = mAllModifiedDirtyBits;
+    // Pending local dirty bits are preserved, as they may not be in mAllModifiedDirtyBits either.
+    mLocalDirtyBits |= mAllModifiedDirtyBits;
     mLocalDirtyBits.set(gl::Texture::DIRTY_BIT_MIN_FILTER);
     mLocalDirtyBits.set(gl::Texture::DIRTY_BIT_MAG_FILTER);
     mLocalDirtyBits.set(gl::Texture::DIRTY_BIT_BASE_LEVEL);
